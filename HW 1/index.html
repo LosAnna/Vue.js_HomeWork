@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 1. Создать кнопку "Перевернуть". При клике на кнопку текст кнопки, 
+        должен перевернуться и отобразиться в обратном порядке. -->
+        <button v-if="reversed" @click="revers">Перевернуть</button>
+        <button v-else="!reversed" @click="revers">ьтунревереП</button>
+        <!-- 2. Есть список элементов. Пользователь может добавлять новые элементы списка с текстом 
+        “Новый элемент списка” нажав на кнопку "Добавить". -->
+        <h1>Список элементов</h1>
+        <div>
+            <div v-for="item in items">
+                <p style="cursor: pointer;" @click="deleteThisElement(item)">{{item.name}}</p>
+            </div>
+            <button @click="addNewElement">Добавить</button>
+        </div>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                reversed: true,
+                count: 5,
+                items: [
+                    {id: 1, name: 'Элемент списка 1'},
+                    {id: 2, name: 'Элемент списка 2'},
+                    {id: 3, name: 'Элемент списка 3'},
+                    {id: 4, name: 'Элемент списка 4'},
+                ],
+            },
+            methods: {
+                revers() {
+                    this.reversed = !this.reversed;
+                },
+                addNewElement() {
+                    this.items.push({ id: `${this.count++}`, name: `Новый элемент списка ${this.count -1}`});
+                },
+        // 3. * При клике на элемент списка он должен быть удален. (по желанию)
+                deleteThisElement(item) {
+                    let target = this.items.findIndex(obj => obj.id == item.id);
+                    this.items.splice(target, 1);
+                },
+            },
+        })
+    </script>
+    
+</body>
+</html>
